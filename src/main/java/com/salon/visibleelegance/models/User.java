@@ -64,6 +64,10 @@ public class User {
     @JsonIgnore
     private Boolean isAdmin = false;
 
+    @Column
+    @JsonIgnore
+    private Boolean isStaff;
+
     @Column(columnDefinition = "integer default 0")
     @JsonIgnore
     private int suggestedCount;
@@ -79,9 +83,18 @@ public class User {
     private Date updatedAt;
 
     // relationships
+
     // one customer to many order items
     @OneToMany(mappedBy = "user")
     private Set<Order> orders = new HashSet<>();
+
+    // one client to many appointments
+    @OneToMany(mappedBy = "client")
+    private Set<Appointment> clientAppointments = new HashSet<>();
+
+    // one stylist to many appointments
+    @OneToMany(mappedBy = "stylist")
+    private Set<Appointment> stylistAppointments = new HashSet<>();
     
     public User(){}
 
@@ -97,7 +110,7 @@ public class User {
         this.password = password;
     }
     // Getter
-    public User(long id, String email, String firstName, String password, String avatar, String aboutMe, Boolean isAdmin) {
+    public User(long id, String email, String firstName, String password, String avatar, String aboutMe, Boolean isAdmin, Boolean isStaff) {
         this.id = id;
         this.email = email;
         this.firstName = firstName;
@@ -105,6 +118,7 @@ public class User {
         this.avatar = avatar;
         this.aboutMe = aboutMe;
         this.isAdmin = isAdmin;
+        this.isStaff = isStaff;
     }
 
     public long getId() {
@@ -201,5 +215,29 @@ public class User {
 
     public void setOrders(Set<Order> orders) {
         this.orders = orders;
+    }
+
+    public Boolean getStaff() {
+        return isStaff;
+    }
+
+    public void setStaff(Boolean staff) {
+        isStaff = staff;
+    }
+
+    public Set<Appointment> getClientAppointments() {
+        return clientAppointments;
+    }
+
+    public void setClientAppointments(Set<Appointment> clientAppointments) {
+        this.clientAppointments = clientAppointments;
+    }
+
+    public Set<Appointment> getStylistAppointments() {
+        return stylistAppointments;
+    }
+
+    public void setStylistAppointments(Set<Appointment> stylistAppointments) {
+        this.stylistAppointments = stylistAppointments;
     }
 }

@@ -45,6 +45,14 @@ public class Service {
     @ManyToOne
     private Category category;
 
+    // one to many booked service
+    @OneToMany(mappedBy = "service")
+    private Set<BookedService> bookedServices = new HashSet<>();
+
+    // one to many provided service
+    @OneToMany(mappedBy = "service")
+    private Set<ProvidedService> providedServices = new HashSet<>();
+
     public Service(){}
 
     public Service(String name, String description, int length, double cost){
@@ -108,5 +116,21 @@ public class Service {
 
     public void setCategory(Category category) {
         this.category = category;
+    }
+
+    public Set<BookedService> getBookedServices() {
+        return bookedServices;
+    }
+
+    public void setBookedServices(Set<BookedService> bookedServices) {
+        this.bookedServices = bookedServices;
+    }
+
+    public Set<ProvidedService> getProvidedServices() {
+        return providedServices;
+    }
+
+    public void setProvidedServices(Set<ProvidedService> providedServices) {
+        this.providedServices = providedServices;
     }
 }
