@@ -41,9 +41,13 @@ public class Product {
 
     // relationships
 
-    // one order to many order items
+    // one product to many order items
     @OneToMany(mappedBy = "product")
     private Set<OrderItem> orderItems = new HashSet<>();
+
+    // one product item to many invetory order items
+    @OneToMany(mappedBy = "product")
+    private Set<InventoryOrderItem> inventoryOrderItems = new HashSet<>();
 
     @ManyToMany(cascade = {
             CascadeType.PERSIST,
@@ -58,6 +62,9 @@ public class Product {
 
     @OneToMany(mappedBy = "product")
     private Set<Measurement> measurements = new HashSet<>();
+
+    @ManyToOne
+    private Brand brand;
 
     public Product(){}
 
@@ -128,5 +135,21 @@ public class Product {
 
     public void setOrderItems(Set<OrderItem> orderItems) {
         this.orderItems = orderItems;
+    }
+
+    public Brand getBrand() {
+        return brand;
+    }
+
+    public void setBrand(Brand brand) {
+        this.brand = brand;
+    }
+
+    public Set<InventoryOrderItem> getInventoryOrderItems() {
+        return inventoryOrderItems;
+    }
+
+    public void setInventoryOrderItems(Set<InventoryOrderItem> inventoryOrderItems) {
+        this.inventoryOrderItems = inventoryOrderItems;
     }
 }
