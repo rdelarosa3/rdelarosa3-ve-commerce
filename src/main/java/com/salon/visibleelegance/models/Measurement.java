@@ -18,6 +18,9 @@ public class Measurement {
     @NotBlank(message = "Price can't be empty")
     private double price;
 
+    @Column(columnDefinition = "integer default 0")
+    private int currentInventory;
+
     // relationships
     @ManyToOne
     private Product product;
@@ -29,9 +32,10 @@ public class Measurement {
         this.price = price;
     }
 
-    public Measurement(long id, int amount, double price){
+    public Measurement(long id, int amount, double price, int currentInventory){
         this.amount = amount;
         this.price = price;
+        this.currentInventory = currentInventory;
         this.id = id;
     }
 
@@ -65,5 +69,13 @@ public class Measurement {
 
     public void setProduct(Product product) {
         this.product = product;
+    }
+
+    public int getCurrentInventory() {
+        return currentInventory;
+    }
+
+    public void setCurrentInventory(int currentInventory) {
+        this.currentInventory = currentInventory;
     }
 }

@@ -13,9 +13,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Table(name = "orders")
-public class Order {
-
+@Table(name="carts")
+public class Cart {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
@@ -90,13 +89,13 @@ public class Order {
     private User user;
 
     // one order to many order items
-    @OneToMany(mappedBy = "order")
-    private Set<OrderItem> orderItems = new HashSet<>();
+    @OneToMany(mappedBy = "cart")
+    private Set<CartItem> cartItems = new HashSet<>();
 
-    public Order(){}
+    public Cart(){}
 
     //setter
-    public Order(
+    public Cart(
             String addressLine1, String addressLine2, String city,
             String state, String zip, String phoneNumber, String email,
             double total, double tax, double discount, double subTotal
@@ -117,7 +116,7 @@ public class Order {
     }
 
     // getter
-    public Order(
+    public Cart(
             long id, String name, String lastName,
             String addressLine1, String addressLine2, String city,
             String state, String zip, String phoneNumber, String email,
@@ -251,11 +250,35 @@ public class Order {
         this.subTotal = subTotal;
     }
 
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public Date getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(Date updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
     public User getUser() {
         return user;
     }
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public Set<CartItem> getCartItems() {
+        return cartItems;
+    }
+
+    public void setCartItems(Set<CartItem> cartItems) {
+        this.cartItems = cartItems;
     }
 }

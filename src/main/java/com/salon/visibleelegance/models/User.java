@@ -11,6 +11,8 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name="users")
@@ -37,7 +39,7 @@ public class User {
             regexp = "^([a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6})*$",
             message = "Invalid Email"
     )
-    @Column(nullable = false, length = 100, unique = true)
+    @Column(nullable = false, length = 250, unique = true)
     private String email;
 
     @NotBlank(message = "First name can't be empty")
@@ -76,6 +78,11 @@ public class User {
     @Column
     private Date updatedAt;
 
+    // relationships
+    // one customer to many order items
+    @OneToMany(mappedBy = "user")
+    private Set<Order> orders = new HashSet<>();
+    
     public User(){}
 
     // Update User
@@ -186,5 +193,13 @@ public class User {
 
     public void setUpdatedAt(Date updatedAt) {
         this.updatedAt = updatedAt;
+    }
+
+    public Set<Order> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(Set<Order> orders) {
+        this.orders = orders;
     }
 }
