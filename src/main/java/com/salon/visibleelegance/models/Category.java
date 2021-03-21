@@ -7,9 +7,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 @Table(name="categories")
@@ -36,10 +34,14 @@ public class Category {
     @Column
     private Date updatedAt;
 
-    // relationship
+    // relationships
+
     @ManyToMany(mappedBy = "categories", fetch = FetchType.LAZY)
     @JsonIgnore
     private Set<Product> products = new HashSet<>();
+
+    @OneToMany(mappedBy = "service")
+    private Set<Service> services = new HashSet<>();
 
     public Category(){}
 
@@ -93,4 +95,13 @@ public class Category {
     public void setProducts(Set<Product> products) {
         this.products = products;
     }
+
+    public Set<Service> getServices() {
+        return services;
+    }
+
+    public void setServices(Set<Service> services) {
+        this.services = services;
+    }
+
 }
