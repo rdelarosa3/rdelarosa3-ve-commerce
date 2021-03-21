@@ -18,6 +18,10 @@ public class Measurement {
     @NotBlank(message = "Price can't be empty")
     private double price;
 
+    // relationships
+    @ManyToOne
+    private Product product;
+
     public Measurement(){}
 
     public Measurement(int amount, double price){
@@ -53,5 +57,13 @@ public class Measurement {
 
     public void setPrice(double price) {
         this.price = price;
+    }
+
+    public Product getProduct() {
+        return product;
+    }
+
+    public void setProduct(Product product) {
+        this.product = product;
     }
 }

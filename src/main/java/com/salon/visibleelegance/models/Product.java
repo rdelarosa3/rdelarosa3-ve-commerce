@@ -43,12 +43,19 @@ public class Product {
     private Date updatedAt;
 
     // relationships
+    @ManyToMany(cascade = {
+            CascadeType.PERSIST,
+            CascadeType.MERGE
+    })
     @JoinTable(
             name="product_categories",
             joinColumns=@JoinColumn(name="product_id"),
             inverseJoinColumns=@JoinColumn(name="category_id")
     )
     private Set<Category> categories = new HashSet<>();
+
+    @OneToMany(mappedBy = "product")
+    private Set<Measurement> measurements = new HashSet<>();
 
     public Product(){}
 
@@ -112,5 +119,13 @@ public class Product {
 
     public void setCategories(Set<Category> categories) {
         this.categories = categories;
+    }
+
+    public Set<Measurement> getMeasurements() {
+        return measurements;
+    }
+
+    public void setMeasurements(Set<Measurement> measurements) {
+        this.measurements = measurements;
     }
 }

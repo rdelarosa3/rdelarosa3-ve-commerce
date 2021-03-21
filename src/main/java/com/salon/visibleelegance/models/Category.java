@@ -40,7 +40,7 @@ public class Category {
     @JsonIgnore
     private Set<Product> products = new HashSet<>();
 
-    @OneToMany(mappedBy = "service")
+    @OneToMany(mappedBy = "category")
     private Set<Service> services = new HashSet<>();
 
     public Category(){}
