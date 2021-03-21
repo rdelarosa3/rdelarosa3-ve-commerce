@@ -8,6 +8,8 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name="products")
@@ -27,6 +29,9 @@ public class Product {
     @Column(columnDefinition = "integer default 0")
     private int currentInventory;
 
+    @Column(length = 250)
+    private String image;
+
     @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
     @Column
@@ -37,6 +42,14 @@ public class Product {
     @Column
     private Date updatedAt;
 
+    // relationships
+    @JoinTable(
+            name="product_categories",
+            joinColumns=@JoinColumn(name="product_id"),
+            inverseJoinColumns=@JoinColumn(name="category_id")
+    )
+    private Set<Category> categories = new HashSet<>();
+
     public Product(){}
 
     // setter
@@ -46,7 +59,8 @@ public class Product {
     }
 
     // getter
-    public Product(String name, String description, int currentInventory){
+    public Product(long id, String name, String description, int currentInventory){
+        this.id = id;
         this.name = name;
         this.description = description;
         this.currentInventory = currentInventory;
@@ -82,5 +96,21 @@ public class Product {
 
     public void setCurrentInventory(int currentInventory) {
         this.currentInventory = currentInventory;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
+    public Set<Category> getCategories() {
+        return categories;
+    }
+
+    public void setCategories(Set<Category> categories) {
+        this.categories = categories;
     }
 }
