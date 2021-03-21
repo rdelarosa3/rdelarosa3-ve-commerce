@@ -23,6 +23,9 @@ public class Brand {
     @Column(nullable = false, length = 100)
     private String name;
 
+    @Column
+    private String logo;
+
     @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
     @Column
@@ -41,12 +44,13 @@ public class Brand {
     public Brand(){}
 
     // setter for product
-    public Brand(String name){
+    public Brand(String name, String logo){
         this.name = name;
+        this.logo = logo;
     }
 
     // getter
-    public Brand(long id, String name){
+    public Brand(long id, String name, String logo){
         this.id = id;
         this.name = name;
     }
