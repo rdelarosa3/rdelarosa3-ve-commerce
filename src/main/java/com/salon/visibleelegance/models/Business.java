@@ -62,6 +62,9 @@ public class Business {
     @OneToMany(mappedBy = "business")
     private Set<BusinessHour> businessHours = new HashSet<>();
 
+    @OneToMany(mappedBy = "business")
+    private Set<Address> addressess = new HashSet<>();
+
     public Business(){}
 
     public Business(String name, String email, String phone, String logo, String operator) {

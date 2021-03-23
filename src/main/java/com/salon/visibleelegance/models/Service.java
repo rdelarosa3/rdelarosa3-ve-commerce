@@ -53,6 +53,28 @@ public class Service {
     @OneToMany(mappedBy = "service")
     private Set<ProvidedService> providedServices = new HashSet<>();
 
+    @ManyToMany(cascade = {
+            CascadeType.PERSIST,
+            CascadeType.MERGE
+    })
+    @JoinTable(
+            name="service_promotions",
+            joinColumns=@JoinColumn(name="service_id"),
+            inverseJoinColumns=@JoinColumn(name="promotion_id")
+    )
+    private Set<Promotion> promotions = new HashSet<>();
+
+    @ManyToMany(cascade = {
+            CascadeType.PERSIST,
+            CascadeType.MERGE
+    })
+    @JoinTable(
+            name="stylist_services",
+            joinColumns=@JoinColumn(name="service_id"),
+            inverseJoinColumns=@JoinColumn(name="user_id")
+    )
+    private Set<User> stylists = new HashSet<>();
+
     public Service(){}
 
     public Service(String name, String description, int length, double cost){
@@ -132,5 +154,21 @@ public class Service {
 
     public void setProvidedServices(Set<ProvidedService> providedServices) {
         this.providedServices = providedServices;
+    }
+
+    public Set<Promotion> getPromotions() {
+        return promotions;
+    }
+
+    public void setPromotions(Set<Promotion> promotions) {
+        this.promotions = promotions;
+    }
+
+    public Set<User> getStylists() {
+        return stylists;
+    }
+
+    public void setStylists(Set<User> stylists) {
+        this.stylists = stylists;
     }
 }

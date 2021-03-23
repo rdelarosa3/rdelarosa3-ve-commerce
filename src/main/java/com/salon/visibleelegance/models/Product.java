@@ -64,6 +64,17 @@ public class Product {
     )
     private Set<Category> categories = new HashSet<>();
 
+    @ManyToMany(cascade = {
+            CascadeType.PERSIST,
+            CascadeType.MERGE
+    })
+    @JoinTable(
+            name="product_promotions",
+            joinColumns=@JoinColumn(name="product_id"),
+            inverseJoinColumns=@JoinColumn(name="promotion_id")
+    )
+    private Set<Promotion> promotions = new HashSet<>();
+
     @OneToMany(mappedBy = "product")
     private Set<Measurement> measurements = new HashSet<>();
 

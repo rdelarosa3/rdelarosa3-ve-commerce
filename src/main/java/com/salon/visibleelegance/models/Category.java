@@ -37,7 +37,6 @@ public class Category {
     // relationships
 
     @ManyToMany(mappedBy = "categories", fetch = FetchType.LAZY)
-    @JsonIgnore
     private Set<Product> products = new HashSet<>();
 
     @OneToMany(mappedBy = "category")

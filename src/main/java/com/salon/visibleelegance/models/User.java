@@ -95,6 +95,18 @@ public class User {
     // one stylist to many appointments
     @OneToMany(mappedBy = "stylist")
     private Set<Appointment> stylistAppointments = new HashSet<>();
+
+    // one stylist to many promtions
+    @OneToMany(mappedBy = "createdBy")
+    private Set<Promotion> promotions = new HashSet<>();
+
+    // one to many address
+    @OneToMany(mappedBy = "user")
+    private Set<Address> addressess = new HashSet<>();
+
+    // many to many service
+    @ManyToMany(mappedBy = "stylists", fetch = FetchType.LAZY)
+    private Set<Service> services = new HashSet<>();
     
     public User(){}
 
@@ -239,5 +251,29 @@ public class User {
 
     public void setStylistAppointments(Set<Appointment> stylistAppointments) {
         this.stylistAppointments = stylistAppointments;
+    }
+
+    public Set<Address> getAddressess() {
+        return addressess;
+    }
+
+    public void setAddressess(Set<Address> addressess) {
+        this.addressess = addressess;
+    }
+
+    public Set<Service> getServices() {
+        return services;
+    }
+
+    public void setServices(Set<Service> services) {
+        this.services = services;
+    }
+
+    public Set<Promotion> getPromotions() {
+        return promotions;
+    }
+
+    public void setPromotions(Set<Promotion> promotions) {
+        this.promotions = promotions;
     }
 }
