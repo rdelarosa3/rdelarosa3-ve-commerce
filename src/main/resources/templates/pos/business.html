@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Title</title>
+</head>
+<body>
+
+<form th:fragment="edit" th:action="@{/business}" th:method="post" class=" p-4" th:object="${business}">
+
+    <p class="h4 mb-4 text-center green-text text-uppercase font-weight-bold">Edit</p>
+
+    <div class="form-group">
+        <label for="editFormName">Name</label>
+        <input type="text" id="editFormName" class="form-control mb-2" placeholder="Name" th:field="*{name}">
+        <p class="red-text" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></p>
+    </div>
+
+    <div class="form-group">
+        <label for="editFormEmail">Email</label>
+        <input type="email" id="editFormEmail" class="form-control mb-2" placeholder="E-mail" th:field="*{email}">
+        <p class="red-text" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></p>
+    </div>
+
+    <div class="form-group">
+        <label for="editFormWebsite">Website</label>
+        <input id="editFormWebsite" class="form-control mb-2" placeholder="Website" th:field="*{website}">
+        <p class="red-text" th:if="${#fields.hasErrors('website')}" th:errors="*{website}"></p>
+    </div>
+
+    <div class="form-group">
+        <label for="editFormPhone">Phone</label>
+        <input id="editFormPhone" class="form-control mb-2" placeholder="Phone" th:field="*{phone}">
+        <p class="red-text" th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}"></p>
+    </div>
+
+    <div class="form-group">
+        <label for="editFormOperator">Operator</label>
+        <input id="editFormOperator" class="form-control mb-2" placeholder="Operator" th:field="*{operator}">
+        <p class="red-text" th:if="${#fields.hasErrors('operator')}" th:errors="*{operator}"></p>
+    </div>
+
+    <!-- submit button -->
+    <button class="btn btn-green my-4 btn-block rounded-pill" type="submit">Update</button>
+</form>
+</body>
+</html>
