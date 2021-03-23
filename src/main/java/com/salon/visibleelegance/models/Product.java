@@ -41,6 +41,10 @@ public class Product {
 
     // relationships
 
+    // one product to many appointment items
+    @OneToMany(mappedBy = "product")
+    private Set<AppointmentItem> appointmentItems = new HashSet<>();
+
     // one product to many order items
     @OneToMany(mappedBy = "product")
     private Set<OrderItem> orderItems = new HashSet<>();
@@ -151,5 +155,13 @@ public class Product {
 
     public void setInventoryOrderItems(Set<InventoryOrderItem> inventoryOrderItems) {
         this.inventoryOrderItems = inventoryOrderItems;
+    }
+
+    public Set<AppointmentItem> getAppointmentItems() {
+        return appointmentItems;
+    }
+
+    public void setAppointmentItems(Set<AppointmentItem> appointmentItems) {
+        this.appointmentItems = appointmentItems;
     }
 }

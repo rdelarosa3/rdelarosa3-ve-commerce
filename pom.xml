@@ -50,6 +50,12 @@
             <artifactId>spring-boot-starter-mail</artifactId>
             <version>2.1.2.RELEASE</version>
         </dependency>
+<!--        Storing time-->
+        <dependency>
+            <groupId>joda-time</groupId>
+            <artifactId>joda-time</artifactId>
+            <version>2.10.10</version>
+        </dependency>
         <!--                SPRING SECURITY *** commented out until required-->
 <!--        <dependency>-->
 <!--            <groupId>org.springframework.boot</groupId>-->
