@@ -38,6 +38,13 @@ public class Business {
     private String phone;
 
     @Column
+    @Pattern(
+            regexp = "^(http://|https://)?(www.)?([a-zA-Z0-9]+).[a-zA-Z0-9]*.[a-z]{3}.?([a-z]+)?$",
+            message = "invalid address"
+    )
+    private String website;
+
+    @Column
     private String logo;
 
     @NotBlank(message = "O name can't be empty")
@@ -67,21 +74,23 @@ public class Business {
 
     public Business(){}
 
-    public Business(String name, String email, String phone, String logo, String operator) {
+    public Business(String name, String email, String phone, String logo, String operator, String website) {
         this.name = name;
         this.email = email;
         this.phone = phone;
         this.logo = logo;
         this.operator = operator;
+        this.website = website;
     }
 
-    public Business(long id, String name, String email, String phone, String logo, String operator) {
+    public Business(long id, String name, String email, String phone, String logo, String operator, String website) {
         this.id = id;
         this.name = name;
         this.email = email;
         this.phone = phone;
         this.logo = logo;
         this.operator = operator;
+        this.website = website;
     }
 
     public long getId() {
@@ -146,5 +155,21 @@ public class Business {
 
     public void setBusinessHours(Set<BusinessHour> businessHours) {
         this.businessHours = businessHours;
+    }
+
+    public String getWebsite() {
+        return website;
+    }
+
+    public void setWebsite(String website) {
+        this.website = website;
+    }
+
+    public Set<Address> getAddressess() {
+        return addressess;
+    }
+
+    public void setAddressess(Set<Address> addressess) {
+        this.addressess = addressess;
     }
 }
