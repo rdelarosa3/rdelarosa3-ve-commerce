@@ -19,7 +19,7 @@ public class BusinessController {
     @Autowired
     private BusinessRepository businessDao;
 
-      @GetMapping("/business")
+      @GetMapping("pos/business")
       public String showEditBusiness(Model model) {
           Business business = businessDao.getFirstById(1L);
 
@@ -29,7 +29,7 @@ public class BusinessController {
           return "pos/business";
       }
 
-    @PostMapping("/business")
+    @PostMapping("pos/business")
     public String postEditBusiness(
             @Valid @ModelAttribute Business businessToUpdate,
             Errors validation,
@@ -54,5 +54,15 @@ public class BusinessController {
         model.addAttribute("business", business);
 
         return "redirect:/";
+    }
+
+    @GetMapping("pos/hours")
+    public String editHours(Model model) {
+        Business business = businessDao.getFirstById(1L);
+
+        model.addAttribute("business", business);
+        // check if logged in user is the profile owner
+
+        return "pos/hours";
     }
 }

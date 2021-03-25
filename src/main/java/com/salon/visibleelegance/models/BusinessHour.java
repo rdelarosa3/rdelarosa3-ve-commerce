@@ -15,19 +15,17 @@ public class BusinessHour {
     private long id;
 
     @NotBlank
-    @Min(1)
-    @Max(7)
-    @Column
-    private int day;
+    @Column(nullable = false, unique = true)
+    private String day;
 
     @Column
     private boolean isClosed;
 
-    @NotBlank
+//    @NotBlank
     @Column
     private String openTime;
 
-    @NotBlank
+//    @NotBlank
     @Column
     private String closeTime;
 
@@ -39,14 +37,14 @@ public class BusinessHour {
 
     public BusinessHour(){}
 
-    public BusinessHour(int day, boolean isClosed, String openTime, String closeTime){
+    public BusinessHour(String day, boolean isClosed, String openTime, String closeTime){
         this.day = day;
         this.isClosed = isClosed;
         this.openTime = openTime;
         this.closeTime = closeTime;
     }
 
-    public BusinessHour(long id, int day, boolean isClosed, String openTime, String closeTime){
+    public BusinessHour(long id, String day, boolean isClosed, String openTime, String closeTime){
         this.day = day;
         this.isClosed = isClosed;
         this.openTime = openTime;
@@ -62,11 +60,11 @@ public class BusinessHour {
         this.id = id;
     }
 
-    public int getDay() {
+    public String getDay() {
         return day;
     }
 
-    public void setDay(int day) {
+    public void setDay(String day) {
         this.day = day;
     }
 
