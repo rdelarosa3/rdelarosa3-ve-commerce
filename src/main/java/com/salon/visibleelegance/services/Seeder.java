@@ -1,7 +1,9 @@
 package com.salon.visibleelegance.services;
 
+import com.salon.visibleelegance.models.Address;
 import com.salon.visibleelegance.models.Business;
 import com.salon.visibleelegance.models.BusinessHour;
+import com.salon.visibleelegance.repos.AddressRepository;
 import com.salon.visibleelegance.repos.BuisnessHourRepository;
 import com.salon.visibleelegance.repos.BusinessRepository;
 import org.slf4j.Logger;
@@ -19,8 +21,12 @@ public class Seeder {
     @Autowired
     private BuisnessHourRepository hourDao;
 
+    @Autowired
+    private AddressRepository addressDao;
+
     private static final Logger LOGGER = LoggerFactory.getLogger(Seeder.class);
     boolean seederHasRun = false;
+    private Business business = new Business();
 
     @EventListener
     public void eventListener(ApplicationStartedEvent event){
@@ -34,23 +40,30 @@ public class Seeder {
     }
     public void createBusiness(){
         try{
-            Business business = businessDao.getFirstById(1L);
+            business = businessDao.getFirstById(1L);
             LOGGER.info(business.getName());
         }catch (Exception e){
+            Business b = new Business();
             LOGGER.info("Creating Business");
-            Business business = new Business();
-            business.setName("Visible Elegance");
-            business.setOperator("Sandy Briseno");
-            business.setEmail("visible-elegance@gmail.com");
-            business.setPhone("(210) 924-5700");
-            businessDao.save(business);
+            b.setName("Visible Elegance");
+            b.setOperator("Sandy Briseno");
+            b.setEmail("visible-elegance@gmail.com");
+            b.setPhone("(210) 924-5700");
+            business = businessDao.save(b);
+            Address a = new Address();
+            a.setBusiness(business);
+            a.setAddressLine1("2926 Pitluk Ave");
+            a.setCity("San Antonio");
+            a.setState("Texas");
+            a.setZip("78211");
+            a.setBilling(false);
+            a.setPhoneNumber("(210) 924-5700");
+            addressDao.save(a);
         }
     }
 
     public void createHours(){
-        System.err.println(hourDao.count());
         if (hourDao.count() >= 7) return;
-        Business business = businessDao.getFirstById(1L);
         for ( int i = 1; i <=7; i++ ){
             BusinessHour bhour = new BusinessHour();
             bhour.setBusiness(business);
