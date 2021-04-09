@@ -1,7 +1,6 @@
 package com.salon.visibleelegance.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.mysql.cj.protocol.AuthenticationProvider;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -107,6 +106,22 @@ public class User {
     // many to many service
     @ManyToMany(mappedBy = "stylists", fetch = FetchType.LAZY)
     private Set<Service> services = new HashSet<>();
+
+    // one to many referral
+    @OneToMany(mappedBy = "referrer", fetch = FetchType.LAZY)
+    private Set<Referral> referrals = new HashSet<>();
+
+    // one to many reviews
+    @OneToMany(mappedBy = "reviewer", fetch = FetchType.LAZY)
+    private Set<Review> reviews = new HashSet<>();
+
+    // one to one
+    @OneToOne(mappedBy = "friend")
+    private Referral referral;
+
+    // one to one
+    @OneToOne(mappedBy="client")
+    private ReferralReward referralReward;
     
     public User(){}
 
@@ -275,5 +290,37 @@ public class User {
 
     public void setPromotions(Set<Promotion> promotions) {
         this.promotions = promotions;
+    }
+
+    public Set<Referral> getReferrals() {
+        return referrals;
+    }
+
+    public void setReferrals(Set<Referral> referrals) {
+        this.referrals = referrals;
+    }
+
+    public Referral getReferral() {
+        return referral;
+    }
+
+    public void setReferral(Referral referral) {
+        this.referral = referral;
+    }
+
+    public ReferralReward getReferralReward() {
+        return referralReward;
+    }
+
+    public void setReferralReward(ReferralReward referralReward) {
+        this.referralReward = referralReward;
+    }
+
+    public Set<Review> getReviews() {
+        return reviews;
+    }
+
+    public void setReviews(Set<Review> reviews) {
+        this.reviews = reviews;
     }
 }

@@ -62,6 +62,10 @@ public class Appointment {
     @OneToMany(mappedBy = "appointment")
     private Set<AppointmentItem> appointmentItems = new HashSet<>();
 
+    // one to one review
+    @OneToOne(mappedBy = "appointment")
+    private Review review;
+
     public Appointment(){}
 
     // setter
@@ -185,5 +189,13 @@ public class Appointment {
 
     public void setAppointmentItems(Set<AppointmentItem> appointmentItems) {
         this.appointmentItems = appointmentItems;
+    }
+
+    public Review getReview() {
+        return review;
+    }
+
+    public void setReview(Review review) {
+        this.review = review;
     }
 }
