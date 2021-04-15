@@ -8,9 +8,7 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 @Table(name="businesses")
@@ -67,7 +65,7 @@ public class Business {
     private Set<Social> socials = new HashSet<>();
 
     @OneToMany(mappedBy = "business")
-    private Set<BusinessHour> businessHours = new HashSet<>();
+    private List<BusinessHour> businessHours = new ArrayList<>();
 
     @OneToMany(mappedBy = "business")
     private Set<Address> addressess = new HashSet<>();
@@ -149,11 +147,11 @@ public class Business {
         this.socials = socials;
     }
 
-    public Set<BusinessHour> getBusinessHours() {
+    public List<BusinessHour> getBusinessHours() {
         return businessHours;
     }
 
-    public void setBusinessHours(Set<BusinessHour> businessHours) {
+    public void setBusinessHours(List<BusinessHour> businessHours) {
         this.businessHours = businessHours;
     }
 

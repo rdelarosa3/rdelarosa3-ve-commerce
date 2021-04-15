@@ -30,6 +30,9 @@ public class Appointment {
     @Column
     private double subTotal;
 
+    @Column
+    private boolean isCancelled;
+
     @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
     @Column
@@ -197,5 +200,13 @@ public class Appointment {
 
     public void setReview(Review review) {
         this.review = review;
+    }
+
+    public boolean isCancelled() {
+        return isCancelled;
+    }
+
+    public void setCancelled(boolean cancelled) {
+        isCancelled = cancelled;
     }
 }

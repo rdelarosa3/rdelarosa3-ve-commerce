@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+    <title>Setup</title>
+</head>
+<body class="bg-light">
+<nav>
+    <div class="container">
+        <h3>Setup</h3>
+    </div>
+
+</nav>
+<section>
+    <div class="container py-3">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card" style="width: 18rem;">
+                    <div class="card-body">
+                        <h5 class="card-title">Business Settings</h5>
+                        <ul class="list-group list-group-flush">
+                            <li id="businessInfo" class="list-group-item">
+<!--                                <a th:href="@{/pos/business}">Business Info</a>-->
+                                <p> Business Info</p>
+                                <p class="text-muted">Manage Settings such as your business name</p>
+                            </li>
+                            <li id="businessHour" class="list-group-item">
+                                <a th:href="@{/pos/hours}">Business Hours</a>
+                                <p class="text-muted">Manage operating days and hours</p>
+                            </li>
+                            <li id="businessLocation" class="list-group-item">
+                                <a th:href="@{/pos/location}">Location</a>
+                                <p class="text-muted">Manage Outlet location of your business name</p>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-8">
+                <div class="card">
+                    <div id="setupContent" class="card-body">
+                        <h5 class="card-title" th:text="${business.name}"></h5>
+                        <ul class="list-unstyled" th:each="location : ${business.getAddressess()}">
+                            <li th:text="${location.addressLine1}"></li>
+                            <li th:text="${location.addressLine2}"></li>
+                            <li th:text="${location.city + ', ' + location.state +', ' + location.zip}"></li>
+                            <li th:text="${location.phoneNumber}"></li>
+                        </ul>
+                        <h6 class="card-subtitle">Business Hours</h6>
+                        <ul class="list-unstyled" th:each="hour : ${business.getBusinessHours()}">
+                            <li th:text="${hour.day} +': ' + ${hour.getOpenTime()} + ' - ' + ${hour.getCloseTime()}"></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div th:replace="partials/scripts :: scripts"></div>
+<script>
+    function getPostsJSON(){
+        var hours = null;
+
+        $.ajax({
+            url: "/hours.json",
+            method: "GET",
+            async: false
+        }).done(function(data){
+            hours = data;
+        });
+        console.log(hours)
+        return hours;
+    }
+    getPostsJSON();
+
+    function getBusinessEdit(){
+        const content = document.getElementById("setupContent");
+        let html = null;
+        $.ajax({
+            url: "/business-info",
+            method: "GET",
+            async: false
+        }).done(function(data){
+            html = data;
+        });
+        content.innerHTML = html;
+    }
+    $('#businessInfo').click(function (){
+       getBusinessEdit();
+    });
+</script>
+</body>
+
+</html>

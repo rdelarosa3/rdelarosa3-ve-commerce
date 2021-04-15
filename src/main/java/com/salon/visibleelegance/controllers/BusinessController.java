@@ -1,15 +1,14 @@
 package com.salon.visibleelegance.controllers;
 
 import com.salon.visibleelegance.models.Business;
+import com.salon.visibleelegance.models.BusinessHour;
+import com.salon.visibleelegance.repos.BuisnessHourRepository;
 import com.salon.visibleelegance.repos.BusinessRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
@@ -18,6 +17,15 @@ public class BusinessController {
 
     @Autowired
     private BusinessRepository businessDao;
+    @Autowired
+    private BuisnessHourRepository bHourDao;
+
+      @GetMapping("pos/setup")
+      public String showSetup(Model model){
+          Business business = businessDao.getFirstById(1L);
+          model.addAttribute("business",business);
+          return "pos/setup";
+      }
 
       @GetMapping("pos/business")
       public String showEditBusiness(Model model) {
@@ -64,5 +72,19 @@ public class BusinessController {
         // check if logged in user is the profile owner
 
         return "pos/hours";
+    }
+
+    // Shows all the hours via json
+    @GetMapping(value = "/hours.json", produces = "application/json")
+    public @ResponseBody
+    Iterable<BusinessHour> viewAllHoursInJSONFormat() {
+        return bHourDao.findBusinessHourByBusiness(businessDao.getFirstById(1L));
+    }
+
+    @RequestMapping(value = "/business-info", method = RequestMethod.GET)
+    public String showBusinessInfo(Model model) {
+        Business business = businessDao.getFirstById(1L);
+        model.addAttribute("business", business);
+        return "pos/partials/business_info :: editForm";
     }
 }
